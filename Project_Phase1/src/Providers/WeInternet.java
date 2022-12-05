@@ -9,7 +9,7 @@ import Services.InternetPayment;
 import Services.Service;
 
 public class WeInternet implements ServiceProvider {
-	private double Cost=0;
+	private double Cost=33;
 	private double discount=1.0;
 
 	@Override

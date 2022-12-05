@@ -14,10 +14,10 @@ public class SpecificDiscount extends DiscountDecorator {
     public double pay(ServiceProvider provider)
     {
 
-    	return setDiscountValue(decoratedPayment,provider);
+    	return addDiscount(decoratedPayment,provider);
         
     }
-    public double setDiscountValue(Payment decoratedPayment,ServiceProvider service)
+    public double addDiscount(Payment decoratedPayment,ServiceProvider service)
     {
 
     	return decoratedPayment.pay(service)*service.getDiscount();
