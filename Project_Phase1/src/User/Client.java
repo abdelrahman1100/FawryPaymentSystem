@@ -10,18 +10,42 @@ import Providers.ProviderFactory;
 import Providers.ServiceProvider;
 import Services.Service;
 import Services.ServiceFactory;
+import Userdata.Userdata;
 
-public class Client {
+public class Client implements User {
 	private String name;
 	private String password;
-	public Client(String name,String password){
+	private double wallet=0.0;
+	private Userdata dataobj=Userdata.getInstance();
+	public Client(){
+		
+	}
+	
+	public String getname() {
+		return this.name;
+	}
+	
+	public String getpassword() {
+		return this.password;
+	}
+	@Override
+	public boolean login(String name,String password) {
 		this.name=name;
 		this.password=password;
+		return dataobj.checkData(name, password);
 	}
-	public void getname() {
-		System.out.println(name);
+
+	@Override
+	public void signup(String name,String password) {
+		// TODO Auto-generated method stub
+		this.name=name;
+		this.password=password;
+		dataobj.setData(name, password);
 	}
-	public void getpassword() {
-		System.out.println(password);
+	public void fund(double v){
+		wallet+=v;
+	}
+	public void Refund(Admin admin,ServiceProvider serviceProvider) {
+		admin.addRefundtolist(this,serviceProvider);
 	}
 }

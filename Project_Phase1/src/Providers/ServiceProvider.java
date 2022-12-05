@@ -5,10 +5,10 @@ import Payment.Payment;
 import Services.Service;
 
 public interface ServiceProvider {
-	public boolean OKPaymentMethod(Payment payment);
-	public void ShowPaymentMethod();
-	public void showService();
-	public boolean OKService(Service service);
-	public void pay(Service service,Payment payment);
-	public void add(DiscountDecorator item);
+
+	public double getCost();
+	public void setCost(double c);
+	void addDiscount(double v);
+	double getDiscount();
+	void removeDiscount();
 }
