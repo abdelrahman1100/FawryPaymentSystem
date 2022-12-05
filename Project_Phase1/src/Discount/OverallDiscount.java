@@ -1,17 +1,44 @@
 package Discount;
 
+import java.util.LinkedList;
+
 import Payment.Payment;
 import Providers.ServiceProvider;
 
-public class OverallDiscount extends DiscountDecorator {
+public class OverallDiscount extends DiscountDecorator implements Subject {
 
-	
-	public void pay(Payment payment,ServiceProvider item) {
-		System.out.println("10% discount");
+	   private LinkedList<ServiceProvider>list=new LinkedList();
+	   
+	   public void checkDiscount(ServiceProvider name) {
+		   boolean ok=false;
+		   for (ServiceProvider temp : list) {
+			    if(temp.getClass().equals(name.getClass())) {
+					System.out.println("This ServiceProvider has OverallDiscount");
+					ok=true;
+				}
+	        }
+		    if(!ok) {
+			   System.out.println("This ServiceProvider do not have OverallDiscount");
+		    }
+	   }
+
+	@Override
+	 public void subscribe (ServiceProvider item){
+		   list.add(item);
+	   }
+
+	@Override
+	public void unsubscribe(ServiceProvider item) {
+		// TODO Auto-generated method stub
+		list.remove(item);
 	}
-	
-	public void Subscribe (ServiceProvider item){
-		   item.add(this);
+
+	@Override
+	public void notifyy() {
+		// TODO Auto-generated method stub
+		for (ServiceProvider temp : list) {
+		    temp.update(0.2);
+        }
 	}
 
 }
