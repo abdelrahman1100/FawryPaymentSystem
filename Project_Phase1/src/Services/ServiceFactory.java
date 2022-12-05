@@ -2,7 +2,7 @@ package Services;
 
 
 public class ServiceFactory {
-	public Service getService(String name) {
+	public Service createService(String name) {
 		
 		if(name.equals("Donation")) {
 			return new Donation();

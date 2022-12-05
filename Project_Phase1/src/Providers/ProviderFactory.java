@@ -1,6 +1,8 @@
 package Providers;
 
-public class ProviderFactory {
+import Donations.CancerHospital;
+
+public class ProviderFactory  {
 	public ServiceProvider getProvider(String name) {
 		
 		if(name.equals("WeMobile")) {
@@ -35,26 +37,7 @@ public class ProviderFactory {
         	return new VodafonInternet();
 		}
 		
-        else if(name.equals("School")) {
-        	return new School();
-		}
-		
-        else if(name.equals("NGO")) {
-        	return new NGO();
-		}
-		
-        else if(name.equals("CancerHospital")) {
-        	return new CancerHospital();
-		}
-		
-        else if(name.equals("MonthlyReceipt")) {
-        	return new MonthlyReceipt();
-		}
-		
-        else if(name.equals("QuarterReceipt")) {
-        	return new QuarterReceipt();
-		}
-		
 		return null;
 	}
+	
 }

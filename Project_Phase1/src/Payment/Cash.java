@@ -1,13 +1,15 @@
 package Payment;
 
+import Providers.ServiceProvider;
 import Services.Service;
 
 public class Cash implements Payment{
 
 	@Override
-	public void pay(Service service) {
+	public double pay(ServiceProvider service) {
 		// TODO Auto-generated method stub
-		System.out.println("Payed with Cash "+service.getCost());
+		//System.out.print("Payed with Cash ");
+		return service.getCost();
 	}
 
 }
