@@ -13,7 +13,7 @@ import Services.InternetPayment;
 import Services.Service;	
 
 public class VodafonInternet implements ServiceProvider{
-	private double Cost=0;
+	private double Cost=12;
 	private double discount=1.0;
 
 	@Override

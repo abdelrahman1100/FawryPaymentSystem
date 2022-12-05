@@ -11,7 +11,7 @@ import Services.MobileRecharge;
 import Services.Service;
 
 public class EtisalateMobile implements ServiceProvider {
-	private double Cost=0;
+	private double Cost=5;
 	private double discount=1.0;
 
 
