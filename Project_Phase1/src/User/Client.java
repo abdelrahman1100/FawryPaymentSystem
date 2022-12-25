@@ -42,10 +42,8 @@ public class Client implements User {
 		this.password=password;
 		dataobj.setData(name, password);
 	}
-	public void fund(double v){
-		wallet+=v;
-	}
-	public void Refund(Admin admin,ServiceProvider serviceProvider) {
-		admin.addRefundtolist(this,serviceProvider);
+	
+	public void Refund(Admin admin) {
+		admin.addRefundtolist(this);
 	}
 }

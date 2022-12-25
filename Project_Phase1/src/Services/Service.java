@@ -8,5 +8,4 @@ public interface Service {
 	public double getCost();
 	public void showproviderslist();
 	public void ShowPaymentMethod();
-
 }

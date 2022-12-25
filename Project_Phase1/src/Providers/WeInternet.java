@@ -9,20 +9,13 @@ import Services.InternetPayment;
 import Services.Service;
 
 public class WeInternet implements ServiceProvider {
-	private double Cost=33;
+	private double Cost=0;
 	private double discount=1.0;
 
 	@Override
-	public void addDiscount(double v){
-		this.discount=v;
-	}
-	@Override
-	public double getDiscount(){
-		return discount;
-	}
-	@Override
-	public void removeDiscount(){
-		this.discount=1.0;
+	public void update(double discount) {
+		// TODO Auto-generated method stub
+		this.discount=discount;
 	}
 
 	@Override

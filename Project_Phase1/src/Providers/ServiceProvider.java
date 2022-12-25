@@ -5,10 +5,7 @@ import Payment.Payment;
 import Services.Service;
 
 public interface ServiceProvider {
-
+	public void update(double discount);
 	public double getCost();
 	public void setCost(double c);
-	void addDiscount(double v);
-	double getDiscount();
-	void removeDiscount();
 }

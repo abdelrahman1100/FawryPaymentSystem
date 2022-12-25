@@ -36,7 +36,5 @@ public class InternetPayment implements Service {
 		System.out.println("Cash");
 		System.out.println("CreditCard");
 	}
-	ServiceProvider getProvider(){
-		return provider;
-	}
+	
 }

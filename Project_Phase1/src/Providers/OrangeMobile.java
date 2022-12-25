@@ -9,21 +9,15 @@ import Services.MobileRecharge;
 import Services.Service;
 
 public class OrangeMobile implements ServiceProvider {
-	private double Cost=10;
+	private double Cost=0;
 	private double discount=1.0;
 
 	@Override
-	public void addDiscount(double v){
-		this.discount=v;
+	public void update(double discount) {
+		// TODO Auto-generated method stub
+		this.discount=discount;
 	}
-	@Override
-	public double getDiscount(){
-		return discount;
-	}
-	@Override
-	public void removeDiscount(){
-		this.discount=1.0;
-	}
+
 	@Override
 	public double getCost() {
 		// TODO Auto-generated method stub

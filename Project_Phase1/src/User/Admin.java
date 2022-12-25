@@ -2,9 +2,8 @@ package User;
 
 import java.util.LinkedList;
 
-import java.util.Map;
-
 import Discount.DiscountDecorator;
+import Discount.Subject;
 import Providers.ServiceProvider;
 import Userdata.Userdata;
 
@@ -13,7 +12,7 @@ public class Admin implements User {
 	private String name;
 	private String password;
 	private Userdata dataobj=Userdata.getInstance();
-	private LinkedList<pair>list=new LinkedList();
+	private LinkedList<Client>list=new LinkedList();
 	public Admin(){
 		
 	}
@@ -40,40 +39,26 @@ public class Admin implements User {
 		dataobj.setData(name, password);
 	}
 	
-	public void addRefundtolist(Client c,ServiceProvider s) {
-		pair p=new pair();
-		p.first=c;
-		p.second=s;
-		list.add(p);
+	public void addRefundtolist(Client c) {
+		list.add(c);
 	}
 	
 	public void processRefund(String s) {
-		if(list.isEmpty()){
-			System.out.println("there is no refund requests");
-			return;
-		}
-		if(s.equals("Accept")) {
+		if(s=="Accept") {
 			System.out.print("processRefund:accepted for the user ");
-			System.out.print(list.getFirst().first.getname());
+			System.out.print(list.getFirst().getname());
 			System.out.println();
-			pair p=new pair();
-			p=list.getFirst();
-			p.first.fund(p.second.getCost());
 			list.pop();
 		}
 		else {
 			System.out.print("processRefund:rejected for the user ");
-			System.out.print(list.getFirst().first.getname());
+			System.out.print(list.getFirst().getname());
 			System.out.println();
 			list.pop();
 		}
 	}
-	public void addSpecificDiscount(ServiceProvider provider,double value) {
-			provider.addDiscount(value);
+	public void addDiscount(Subject discount,ServiceProvider provider) {
+		discount.subscribe(provider);
 	}
-	public void addOverallDiscount(ServiceProvider []arr,double value) {
-		for (ServiceProvider temp : arr) {
-			temp.addDiscount(value);
-		}
-	}
+	
 }
