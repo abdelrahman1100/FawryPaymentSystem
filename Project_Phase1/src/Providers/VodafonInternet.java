@@ -2,8 +2,9 @@ package Providers;
 
 import java.util.LinkedList;
 
+
 import Discount.DiscountDecorator;
-import Payment.Cashe;
+import Payment.Cash;
 import Payment.CreditCard;
 import Payment.Payment;
 import Payment.PaymentFactory;
