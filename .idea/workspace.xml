@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="328fcdf4-f7a2-4a5c-b802-06ce883220ad" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Project_Phase1/src/Project_Phase1/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project_Phase1/src/Project_Phase1/main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project_Phase1/src/Providers/VodafonInternet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project_Phase1/src/Providers/VodafonInternet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project_Phase1/src/Providers/VodafonMobile.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project_Phase1/src/Providers/VodafonMobile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project_Phase1/src/User/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project_Phase1/src/User/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project_Phase1/src/User/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project_Phase1/src/User/Client.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2JYOeMEuXk65ZdfdQmNhaUyua6L" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/My Folders/Abdo/FCAI/Subjects/Third year/First term/Advanced Software eng/SofttwareProject_phase1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Project_Phase1.main" />
+      <module name="SofttwareProject_phase1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="328fcdf4-f7a2-4a5c-b802-06ce883220ad" name="Changes" comment="" />
+      <created>1672251643757</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1672251643757</updated>
+      <workItem from="1672251647024" duration="135000" />
+      <workItem from="1672251812516" duration="314000" />
+      <workItem from="1672265296789" duration="1090000" />
+      <workItem from="1672270718249" duration="680000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

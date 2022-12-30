@@ -67,7 +67,7 @@ public class main {
 		System.out.println("MobileRecharge");
 		System.out.println("Donation");
 		System.out.println("Landline");
-		String s=sc.nextLine();
+		String s=sc.next();
 		Service serv=new ServiceFactory().createService(s);
 		if(serv==null) {
 			System.out.println("sorry service do not exist");
@@ -75,7 +75,7 @@ public class main {
 		}
 		if(s.equals("InternetPayment")) {
 			serv.showproviderslist();
-			s=sc.nextLine();
+			s=sc.next();
 			ServiceProvider serviceprovider=new ProviderFactory().getProvider(s);
 			if(serviceprovider==null) {
 				System.out.println("error");
@@ -85,14 +85,14 @@ public class main {
 			servic.setProvider(serviceprovider);
 			serv=servic;
 			serv.ShowPaymentMethod();
-			s=sc.nextLine();
+			s=sc.next();
 			Payment pay=new PaymentFactory().getPayment(s);
 			if(pay==null) {
 				System.out.println("error");
 				return;
 			}
 			System.out.println("if you want to know this service has discount enter check discount");
-			s=sc.nextLine();
+			s=sc.next();
 			if(s.equals("check discount")) {
 				specificDiscount.checkDiscount(serviceprovider);
 				overallDiscount.checkDiscount(serviceprovider);
@@ -103,7 +103,7 @@ public class main {
 			pay.pay(serv);
 			System.out.println("By user "+ user1.getname());
 			System.out.println("do you want to refund? Y or N");
-			s=sc.nextLine();
+			s=sc.next();
 			if(s.equals("Y")) {
 				user1.Refund(admin);
 				System.out.println("Admin: there is a refund do you want to accept? Y or N");
@@ -121,7 +121,7 @@ public class main {
 		}
 		if(s.equals("MobileRecharge")) {
 			serv.showproviderslist();
-			s=sc.nextLine();
+			s=sc.next();
 			ServiceProvider serviceprovider=new ProviderFactory().getProvider(s);
 			if(serviceprovider==null) {
 				System.out.println("error");
@@ -132,14 +132,14 @@ public class main {
 			serv=servic;
 			serv=servic;
 			serv.ShowPaymentMethod();
-			s=sc.nextLine();
+			s=sc.next();
 			Payment pay=new PaymentFactory().getPayment(s);
 			if(pay==null) {
 				System.out.println("error");
 				return;
 			}
 			System.out.println("if you want to know this service has discount enter check discount");
-			s=sc.nextLine();
+			s=sc.next();
 			if(s.equals("check discount")) {
 				specificDiscount.checkDiscount(serviceprovider);
 				overallDiscount.checkDiscount(serviceprovider);
@@ -150,11 +150,11 @@ public class main {
 			pay.pay(serv);
 			System.out.println("By user "+ user1.getname());
 			System.out.println("do you want to refund? Y or N");
-			s=sc.nextLine();
+			s=sc.next();
 			if(s.equals("Y")) {
 				user1.Refund(admin);
 				System.out.println("Admin: there is a refund do you want to accept? Y or N");
-				s=sc.nextLine();
+				s=sc.next();
 				if(s.equals("Y")) {
 					admin.processRefund("Accept");
 				}
@@ -168,7 +168,7 @@ public class main {
 		}
 		if(s.equals("Donation")) {
 			serv.showproviderslist();
-			s=sc.nextLine();
+			s=sc.next();
 			DonationProvider service=new DonationFactory().getDonation(s);
 			if(service==null) {
 				System.out.println("error");
@@ -177,7 +177,7 @@ public class main {
 			Donation servic=new Donation();
 			servic.setDonation(service);
 			servic.ShowPaymentMethod();
-			s=sc.nextLine();
+			s=sc.next();
 			Payment pay=new PaymentFactory().getPayment(s);
 			if(pay==null) {
 				System.out.println("error");
@@ -186,11 +186,11 @@ public class main {
 			pay.pay(servic);
 			System.out.println("By user "+ user1.getname());
 			System.out.println("do you want to refund? Y or N");
-			s=sc.nextLine();
+			s=sc.next();
 			if(s.equals("Y")) {
 				user1.Refund(admin);
 				System.out.println("Admin: there is a refund do you want to accept? Y or N");
-				s=sc.nextLine();
+				s=sc.next();
 				if(s.equals("Y")) {
 					admin.processRefund("Accept");
 				}
@@ -204,7 +204,7 @@ public class main {
 		}
 		if(s.equals("Landline")) {
 			serv.showproviderslist();
-			s=sc.nextLine();
+			s=sc.next();
 			Plan service=new PlanFactory().getPlan(s);
 			if(service==null) {
 				System.out.println("error");
@@ -213,7 +213,7 @@ public class main {
 			Landline servic=new Landline();
 			servic.setPlan(service);
 			servic.ShowPaymentMethod();
-			s=sc.nextLine();
+			s=sc.next();
 			Payment pay=new PaymentFactory().getPayment(s);
 			if(pay==null) {
 				System.out.println("error");
@@ -222,11 +222,11 @@ public class main {
 			pay.pay(servic);
 			System.out.println("By user "+ user1.getname());
 			System.out.println("do you want to refund? Y or N");
-			s=sc.nextLine();
+			s=sc.next();
 			if(s.equals("Y")) {
 				user1.Refund(admin);
 				System.out.println("Admin: there is a refund do you want to accept? Y or N");
-				s=sc.nextLine();
+				s=sc.next();
 				if(s.equals("Y")) {
 					admin.processRefund("Accept");
 				}
