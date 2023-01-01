@@ -1,3 +1,6 @@
-# SofttwareProject_phase1
-first phase of the project
-the project is about a system that has various ways of paying or recharging services like mobile balance or internet or making donations
+# SofttwareProject_phase2
+## Notes : 
+### 1. open the src file as a maven java project
+### 2. The project depends on java 11
+### 3. The project is Build using Rest Api
+### 4. MVC Pattern & Several Design Patterns Have Been Used In This Project 
