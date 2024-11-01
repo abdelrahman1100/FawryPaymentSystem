@@ -1,46 +1,54 @@
 package com.example.phase2.models.user;
 
+import com.example.phase2.models.Refund;
+import com.example.phase2.models.Transaction;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table
+@Table(name="client")
 public class Client {
 	@Id
-	private int id;
+	@Column(name="id")
+	private Long id;
+	@Column(name="name")
 	private String name;
+	@Column(name="password")
 	private String password;
+	@Column(name="wallet")
 	private double wallet;
 	@JoinColumn
 	@OneToOne
 	CreditCard creditCard;
+	@JoinColumn
+	@OneToMany
+	List<Refund>refunds;
+	@JoinColumn
+	@OneToMany
+	List<Transaction>transactions;
 
 	public Client(){
-		this.wallet=0;
-		this.creditCard=new CreditCard("","",0);
 	}
 
-	public Client(double wallet, CreditCard creditCard) {
-		this.wallet = wallet;
-		this.creditCard = creditCard;
+	public Long getId() {
+		return id;
 	}
 
-
-	Boolean available;
-
-	public String getName(){
+	public String getName() {
 		return name;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
-
-	public int getId() {
-		return id;
-	}
-
-	public void setAvailable(Boolean available){
-		this.available=available;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public double getWallet() {
@@ -57,5 +65,21 @@ public class Client {
 
 	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
+	}
+
+	public List<Refund> getRefunds() {
+		return refunds;
+	}
+
+	public void setRefunds(List<Refund> refunds) {
+		this.refunds = refunds;
+	}
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 }

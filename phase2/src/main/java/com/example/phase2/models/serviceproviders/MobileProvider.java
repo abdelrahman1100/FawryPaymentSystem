@@ -1,34 +1,56 @@
 package com.example.phase2.models.serviceproviders;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.phase2.models.Transaction;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
-@Table
+@Table(name="mobile_provider")
 public class MobileProvider {
     @Id
+    @Column(name="id")
     Long id;
+    @Column(name="provider_name")
     String providerName;
+    @Column(name="amount")
     double amount;
-
+    @Column(name="price")
+    double price;
+    @JoinColumn
+    @OneToMany
+    List<Transaction> transactions;
 
     public MobileProvider() {
-
     }
-    public MobileProvider(String providerName) {
+    public String getProviderName() {
+        return providerName;
+    }
+
+    public void setProviderName(String providerName) {
         this.providerName = providerName;
-        this.amount=0;
     }
 
-    public void addMoney(double amount){
-        this.amount+=amount;
+    public double getAmount() {
+        return amount;
+    }
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
+    public double getPrice() {
+        return price;
+    }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-    public double getMoney(double requiredAmount) {
-        this.amount-=requiredAmount;
-        return requiredAmount;
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

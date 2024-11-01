@@ -1,23 +1,34 @@
 package com.example.phase2.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.phase2.models.user.Client;
+import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name="refund")
 public class Refund {
     @Id
     Long id;
-    int clientId;
-    Long transactionId;
-
-    public Refund(int clientId, Long transactionId) {
-        this.clientId = clientId;
-        this.transactionId = transactionId;
+    @JoinColumn
+    @ManyToOne
+    Client client;
+    @JoinColumn
+    @OneToOne
+    Transaction transaction;
+    public Refund() {
+    }
+    public Client getClient() {
+        return client;
     }
 
-    public Refund() {
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 }

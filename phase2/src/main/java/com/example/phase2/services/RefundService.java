@@ -8,55 +8,36 @@ import com.example.phase2.models.serviceproviders.Landline;
 import com.example.phase2.models.serviceproviders.MobileProvider;
 import com.example.phase2.models.user.Client;
 import com.example.phase2.repositories.RefundRepository;
-import com.example.phase2.services.donationservices.DonationProviderService;
-import com.example.phase2.services.internetservices.InternetProviderService;
-import com.example.phase2.services.mobileservices.MobileProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RefundService {
-    @Autowired
-    RefundRepository refundRepository;
-    @Autowired
-    TransactionService transactionService;
-    @Autowired
     ClientService clientService;
-    @Autowired
+    DonationProviderService donationProviderService;
     MobileProviderService mobileProviderService;
-    @Autowired
+    LandlineService landlineService;
     InternetProviderService internetProviderService;
     @Autowired
-    Landline landline;
-    @Autowired
-    DonationProviderService donationProviderService;
-    public void makeRefundRequest(int clientId, Long transactionId) {
-        Transaction transaction=transactionService.findByID(transactionId);
-        Client client=clientService.findById(clientId);
-
-        String serviceType=transaction.getServiceType();
-        if(serviceType=="mobile recharge"){
-            String provider= transaction.getProvider();
-            MobileProvider mobileProvider= mobileProviderService.findByProvider(provider);
-            double amount = mobileProvider.getMoney(transaction.getAmount());
-            client.setWallet(client.getWallet()+transaction.getAmount());
+    public RefundService(ClientService clientService){
+        this.clientService=clientService;
+    }
+    public void save(Refund refund){
+        Transaction transaction=refund.getTransaction();
+        double amount=transaction.getAmount();
+        if(transaction.getDonationProvider()!=null){
+            donationProviderService.withdrawMoney(transaction.getDonationProvider().getProviderName(),amount);
         }
-        else if(serviceType=="internet payment"){
-            String provider= transaction.getProvider();
-            InternetProvider internetProvider= internetProviderService.findByProvider(provider);
-            double amount = internetProvider.getMoney(transaction.getAmount());
-            client.setWallet(client.getWallet()+amount);
+        else if(transaction.getLandline()!=null){
+            landlineService.withdrawMoney(transaction.getLandline().getPlan(),amount);
         }
-        else if(serviceType=="landline"){
-            double amount=landline.getMoney(transaction.getAmount());
-            client.setWallet(client.getWallet()+amount);
+        else if(transaction.getMobileProvider()!=null){
+            mobileProviderService.withdrawMoney(transaction.getMobileProvider().getProviderName(),amount);
         }
-        else if(serviceType=="donation"){
-            String provider= transaction.getProvider();
-            DonationProvider donationProvider= donationProviderService.findByProvider(provider);
-            double amount = donationProvider.getMoney(transaction.getAmount());
-            client.setWallet(client.getWallet()+amount);
+        else if(transaction.getInternetProvider()!=null) {
+            internetProviderService.withdrawMoney(transaction.getInternetProvider().getProviderName(),amount);
         }
-        refundRepository.save(new Refund(clientId,transactionId));
+        Client client=transaction.getClient();
+        clientService.addCreditCard(client.getId(),amount);
     }
 }

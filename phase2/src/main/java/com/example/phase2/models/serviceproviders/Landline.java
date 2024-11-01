@@ -1,33 +1,56 @@
 package com.example.phase2.models.serviceproviders;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+import com.example.phase2.models.Transaction;
+import jakarta.persistence.*;
 
-@Component
+import java.util.List;
+
+@Entity
+@Table(name="landline")
 public class Landline {
+    @Id
+    @Column(name="id")
+    Long id;
+    @Column(name="amount")
     double amount;
-   public double getPlanFees(String plan){
-        if(plan=="Monthly receipt"){
-            return 80;
-        }
-        else if(plan=="Quarter receipt"){
-            return 100;
-        }
-        return 0;
+    @Column(name="plan")
+    String plan;
+    @Column(name="price")
+    double price;
+
+    @JoinColumn
+    @OneToMany
+    List<Transaction> transactions;
+    public Landline(){
     }
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
     public double getAmount() {
         return amount;
     }
 
-    public double getMoney(double requiredAmount){
-       this.amount-=requiredAmount;
-       return requiredAmount;
+    public String getPlan() {
+        return plan;
+    }
+
+    public void setPlan(String plan) {
+        this.plan = plan;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

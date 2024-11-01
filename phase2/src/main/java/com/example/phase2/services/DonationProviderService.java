@@ -1,4 +1,4 @@
-package com.example.phase2.services.donationservices;
+package com.example.phase2.services;
 
 import com.example.phase2.models.serviceproviders.DonationProvider;
 import com.example.phase2.models.serviceproviders.InternetProvider;
@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DonationProviderService {
-    @Autowired
     DonationProviderRepository donationProviderRepository;
+    @Autowired
+    DonationProviderService(DonationProviderRepository donationProviderRepository){
+        this.donationProviderRepository=donationProviderRepository;
+    }
 
     public void createProvider(DonationProvider donationProvider) {
         donationProviderRepository.save(donationProvider);
@@ -18,7 +21,13 @@ public class DonationProviderService {
 
     void addMoney(String provider, double amount) {
         DonationProvider donationProvider = donationProviderRepository.findByProviderName(provider);
-        donationProvider.addMoney(amount);
+        donationProvider.setAmount(donationProvider.getAmount()+amount);
+        donationProviderRepository.save(donationProvider);
+    }
+    void withdrawMoney(String provider, double amount) {
+        DonationProvider donationProvider = donationProviderRepository.findByProviderName(provider);
+        donationProvider.setAmount(donationProvider.getAmount()-amount);
+        donationProviderRepository.save(donationProvider);
     }
 
     public DonationProvider findByProvider(String provider) {

@@ -1,4 +1,4 @@
-package com.example.phase2.services.mobileservices;
+package com.example.phase2.services;
 
 import com.example.phase2.models.serviceproviders.DonationProvider;
 import com.example.phase2.models.serviceproviders.MobileProvider;
@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MobileProviderService {
-    @Autowired
     MobileProviderRepository mobileProviderRepository;
+    @Autowired
+    MobileProviderService(MobileProviderRepository mobileProviderRepository){
+        this.mobileProviderRepository=mobileProviderRepository;
+    }
 
     public void createProvider(MobileProvider mobileProvider) {
         mobileProviderRepository.save(mobileProvider);
@@ -17,7 +20,13 @@ public class MobileProviderService {
 
     void addMoney(String provider, double amount) {
         MobileProvider mobileProvider = mobileProviderRepository.findByProviderName(provider);
-        mobileProvider.addMoney(amount);
+        mobileProvider.setAmount(mobileProvider.getAmount()+amount);
+        mobileProviderRepository.save(mobileProvider);
+    }
+    void withdrawMoney(String provider, double amount) {
+        MobileProvider mobileProvider = mobileProviderRepository.findByProviderName(provider);
+        mobileProvider.setAmount(mobileProvider.getAmount()-amount);
+        mobileProviderRepository.save(mobileProvider);
     }
 
     public MobileProvider findByProvider(String provider) {

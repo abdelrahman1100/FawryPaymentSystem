@@ -10,39 +10,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class ClientController {
-    @Autowired
+@RequestMapping("/api")
+class ClientController {
     ClientService clientService;
-    @PostMapping("/api/client/login")
-    public ResponseEntity<String>loginUser(@RequestBody Client client){
-       Boolean flag= clientService.login(client);
-       if(flag){
-           return new ResponseEntity<>("success", HttpStatus.OK);
-       }
-       else{
-           return new ResponseEntity<>("invalid username or password", HttpStatus.BAD_REQUEST);
-       }
-
+    @Autowired
+    public ClientController(ClientService clientService){
+        this.clientService=clientService;
     }
-    @PostMapping("/api/client/signup")
-    public ResponseEntity<String>signUpUSer(@RequestBody Client client){
-        if(clientService.existByName(client.getName())){
-            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
-        }
-        else{
-            clientService.signUp(client);
-            return new ResponseEntity<>("success", HttpStatus.CREATED);
-        }
+    @PostMapping("/clients")
+    public Client save(@RequestBody Client client){
+        return clientService.save(client);
     }
 
-    @GetMapping("/api/client/{userName}")
-    public ResponseEntity<Client>findUserByName(@PathVariable String userName){
+    @GetMapping("/clients/{userName}")
+    public Client findUserByName(@PathVariable String userName){
         Client client=clientService.findByName(userName);
-        return new ResponseEntity<>(client,HttpStatus.OK);
+        return client;
     }
-    @GetMapping("/api/client")
-    public ResponseEntity<List<Client>>loginUser(){
+    @GetMapping("/clients")
+    public List<Client>findAll(){
         List<Client> list=clientService.findAll();
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        return list;
+    }
+    @PostMapping("/wallet/add/{clientId}/{amount}")
+    ResponseEntity<String>addWallet(@PathVariable Long clientId,@PathVariable double amount){
+        try {
+            clientService.addWallet(clientId, amount);
+            return ResponseEntity.ok("Money added successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add money to wallet.");
+        }
     }
 }

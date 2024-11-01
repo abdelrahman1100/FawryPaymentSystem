@@ -1,4 +1,4 @@
-package com.example.phase2.services.internetservices;
+package com.example.phase2.services;
 
 import com.example.phase2.models.serviceproviders.DonationProvider;
 import com.example.phase2.models.serviceproviders.InternetProvider;
@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InternetProviderService {
-    @Autowired
     InternetProviderRepository internetProviderRepository;
+    @Autowired
+    InternetProviderService(InternetProviderRepository internetProviderRepository){
+        this.internetProviderRepository=internetProviderRepository;
+    }
 
     public void createProvider(InternetProvider internetProvider) {
         internetProviderRepository.save(internetProvider);
@@ -19,7 +22,13 @@ public class InternetProviderService {
 
     void addMoney(String provider, double amount) {
         InternetProvider internetProvider = internetProviderRepository.findByProviderName(provider);
-        internetProvider.addMoney(amount);
+        internetProvider.setAmount(internetProvider.getAmount()+amount);
+        internetProviderRepository.save(internetProvider);
+    }
+    void withdrawMoney(String provider, double amount) {
+        InternetProvider internetProvider = internetProviderRepository.findByProviderName(provider);
+        internetProvider.setAmount(internetProvider.getAmount()-amount);
+        internetProviderRepository.save(internetProvider);
     }
 
     public InternetProvider findByProvider(String provider) {

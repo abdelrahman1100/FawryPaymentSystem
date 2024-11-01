@@ -1,33 +1,37 @@
 package com.example.phase2.models.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name="credit_card")
 public class CreditCard {
     @Id
+    @Column(name="card_number")
     String cardNumber;
+    @Column(name="card_password")
     String cardPassword;
+    @Column(name = "amount")
     double amount;
-
+    @JoinColumn
+    @OneToOne
+    Client client;
     public CreditCard() {
-
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public void setCardPassword(String cardPassword) {
-        this.cardPassword = cardPassword;
     }
 
     public String getCardNumber() {
         return cardNumber;
     }
 
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
     public String getCardPassword() {
         return cardPassword;
+    }
+
+    public void setCardPassword(String cardPassword) {
+        this.cardPassword = cardPassword;
     }
 
     public double getAmount() {
@@ -38,9 +42,11 @@ public class CreditCard {
         this.amount = amount;
     }
 
-    public CreditCard(String cardNumber, String cardPassword, double amount) {
-        this.cardNumber = cardNumber;
-        this.cardPassword = cardPassword;
-        this.amount = amount;
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
