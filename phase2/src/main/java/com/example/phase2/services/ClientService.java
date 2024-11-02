@@ -3,6 +3,7 @@ package com.example.phase2.services;
 import com.example.phase2.models.user.Client;
 import com.example.phase2.models.user.CreditCard;
 import com.example.phase2.repositories.ClientRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,11 @@ public class ClientService {
     ClientRepository clientRepository;
     CreditCardService creditCardService;
     @Autowired
-    ClientService(ClientRepository clientRepository){
+    ClientService(ClientRepository clientRepository,CreditCardService creditCardService){
         this.clientRepository=clientRepository;
         this.creditCardService=creditCardService;
     }
-    //check
+    @Transactional
     public Client save(Client client){
        Client dbClient= clientRepository.save(client);
         return dbClient;
@@ -41,12 +42,15 @@ public class ClientService {
         }
        return client;
     }
+    @Transactional
     public void delete(Long id){
         clientRepository.deleteById(id);
     }
+
     public Boolean existByName(String name){
         return clientRepository.existsByName(name);
     }
+    @Transactional
     public void addWallet(Long id, double amount) {
         Optional<Client> result=clientRepository.findById(id);
         Client client=null;
@@ -59,6 +63,7 @@ public class ClientService {
         client.setWallet(client.getWallet()+amount);
         clientRepository.save(client);
     }
+    @Transactional
     public void withdrawWallet(Long id, double amount) {
         Optional<Client> result=clientRepository.findById(id);
         Client client=null;
@@ -71,6 +76,7 @@ public class ClientService {
         client.setWallet(client.getWallet()-amount);
         clientRepository.save(client);
     }
+    @Transactional
     public void addCreditCard(Long id, double amount){
         Optional<Client> result=clientRepository.findById(id);
         Client client=null;
@@ -83,6 +89,7 @@ public class ClientService {
         CreditCard creditCard=client.getCreditCard();
         creditCardService.addAmount(creditCard.getCardNumber(),amount);
     }
+    @Transactional
     public void withdrawCreditCard(Long id, double amount) {
         Optional<Client> result=clientRepository.findById(id);
         Client client=null;

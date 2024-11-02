@@ -8,6 +8,7 @@ import com.example.phase2.models.serviceproviders.Landline;
 import com.example.phase2.models.serviceproviders.MobileProvider;
 import com.example.phase2.models.user.Client;
 import com.example.phase2.repositories.RefundRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class RefundService {
     public RefundService(ClientService clientService){
         this.clientService=clientService;
     }
+    @Transactional
     public void save(Refund refund){
         Transaction transaction=refund.getTransaction();
         double amount=transaction.getAmount();

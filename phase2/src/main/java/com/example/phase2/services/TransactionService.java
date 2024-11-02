@@ -3,6 +3,7 @@ package com.example.phase2.services;
 import com.example.phase2.models.Transaction;
 import com.example.phase2.models.user.Client;
 import com.example.phase2.repositories.TransactionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class TransactionService {
         this.internetProviderService=internetProviderService;
         this.clientService=clientService;
     }
-
+    @Transactional
     public void save(Transaction transaction) {
         if(transaction.getDonationProvider()!=null){
             String providerName=transaction.getDonationProvider().getProviderName();
