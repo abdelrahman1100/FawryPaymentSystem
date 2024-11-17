@@ -1,19 +1,19 @@
-package com.example.phase2.models.user;
+package com.example.phase2.models;
 
+import com.example.phase2.models.Client;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="credit_card")
 public class CreditCard {
     @Id
-    @Column(name="card_number")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long creditCardId;
     String cardNumber;
-    @Column(name="card_password")
     String cardPassword;
-    @Column(name = "amount")
     double amount;
-    @JoinColumn
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
     Client client;
     public CreditCard() {
     }
@@ -40,10 +40,6 @@ public class CreditCard {
 
     public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public Client getClient() {
-        return client;
     }
 
     public void setClient(Client client) {

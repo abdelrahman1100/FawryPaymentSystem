@@ -6,51 +6,21 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="mobile_provider")
-public class MobileProvider {
-    @Id
-    @Column(name="id")
-    Long id;
-    @Column(name="provider_name")
-    String providerName;
-    @Column(name="amount")
-    double amount;
-    @Column(name="price")
-    double price;
-    @JoinColumn
-    @OneToMany
-    List<Transaction> transactions;
+public class MobileProvider extends ServiceProvider {
+    private String mobilePlan;
+    public MobileProvider(String name, double fee, String mobilePlan) {
+        super(name,fee);
+        this.mobilePlan=mobilePlan;
+    }
 
     public MobileProvider() {
     }
-    public String getProviderName() {
-        return providerName;
+
+    public String getMobilePlan() {
+        return mobilePlan;
     }
 
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setMobilePlan(String mobilePlan) {
+        this.mobilePlan = mobilePlan;
     }
 }

@@ -6,53 +6,22 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="internet_provider")
-public class InternetProvider {
-    @Id
-    @Column(name="id")
-    Long id;
-    @Column(name="provider_name")
-    String providerName;
-    @Column(name="amount")
-    double amount;
-    @Column(name="price")
-    double price;
-    @JoinColumn
-    @OneToMany
-    List<Transaction> transactions;
+public class InternetProvider extends ServiceProvider {
+    private String internetPackage;
 
     public InternetProvider() {
     }
 
-    public String getProviderName() {
-        return providerName;
+    public InternetProvider(String providerName, double price, String internetPackage) {
+        super(providerName, price);
+        this.internetPackage = internetPackage;
     }
 
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
+    public String getInternetPackage() {
+        return internetPackage;
     }
 
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setInternetPackage(String internetPackage) {
+        this.internetPackage = internetPackage;
     }
 }

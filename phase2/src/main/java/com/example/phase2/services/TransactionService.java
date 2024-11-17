@@ -1,7 +1,11 @@
 package com.example.phase2.services;
 
+import com.example.phase2.dto.PaymentRequest;
 import com.example.phase2.models.Transaction;
-import com.example.phase2.models.user.Client;
+import com.example.phase2.models.serviceproviders.ServiceProvider;
+import com.example.phase2.models.Client;
+import com.example.phase2.repositories.ClientRepository;
+import com.example.phase2.repositories.ServiceProviderRepository;
 import com.example.phase2.repositories.TransactionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,136 +17,78 @@ import java.util.Optional;
 @Service
 public class TransactionService {
     TransactionRepository transactionRepository;
-    DonationProviderService donationProviderService;
-    LandlineService landlineService;
-    MobileProviderService mobileProviderService;
-    InternetProviderService internetProviderService;
-    ClientService clientService;
+    ClientRepository clientRepository;
+    ServiceProviderRepository serviceProviderRepository;
     @Autowired
-    TransactionService(TransactionRepository transactionRepository,DonationProviderService donationProviderService,LandlineService landlineService,MobileProviderService mobileProviderService,InternetProviderService internetProviderService,ClientService clientService){
+    TransactionService(TransactionRepository transactionRepository,ClientRepository clientRepository,ServiceProviderRepository serviceProviderRepository){
         this.transactionRepository=transactionRepository;
-        this.donationProviderService=donationProviderService;
-        this.landlineService=landlineService;
-        this.mobileProviderService=mobileProviderService;
-        this.internetProviderService=internetProviderService;
-        this.clientService=clientService;
+        this.clientRepository=clientRepository;
+        this.serviceProviderRepository=serviceProviderRepository;
     }
     @Transactional
-    public void save(Transaction transaction) {
-        if(transaction.getDonationProvider()!=null){
-            String providerName=transaction.getDonationProvider().getProviderName();
-            double amount=transaction.getAmount();
-            Client client=transaction.getClient();
-            if(transaction.getPaymentMethod().equals("Wallet")){
-                if(client.getWallet()>=amount){
-                    clientService.withdrawWallet(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            else{
-                if(client.getCreditCard().getAmount()>=amount){
-                    clientService.withdrawCreditCard(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            donationProviderService.addMoney(providerName,amount);
-            transactionRepository.save(transaction);
-        }
-        else if(transaction.getLandline()!=null){
-            String providerName=transaction.getLandline().getPlan();
-            double amount=transaction.getAmount();
-            double price=transaction.getLandline().getPrice();
-            Client client=transaction.getClient();
-            if(amount<price){
-                throw new RuntimeException("added amount less than service price");
-            }
-            if(transaction.getPaymentMethod().equals("Wallet")){
-                if(client.getWallet()>=amount){
-                    clientService.withdrawWallet(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            else{
-                if(client.getCreditCard().getAmount()>=amount){
-                    clientService.withdrawCreditCard(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            landlineService.addMoney(providerName,amount);
-            transactionRepository.save(transaction);
-        }
-        else if(transaction.getMobileProvider()!=null){
-            String providerName=transaction.getMobileProvider().getProviderName();
-            double amount=transaction.getAmount();
-            double price=transaction.getMobileProvider().getPrice();
-            Client client=transaction.getClient();
-            if(amount<price){
-                throw new RuntimeException("added amount less than service price");
-            }
-            if(transaction.getPaymentMethod().equals("Wallet")){
-                if(client.getWallet()>=amount){
-                    clientService.withdrawWallet(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            else{
-                if(client.getCreditCard().getAmount()>=amount){
-                    clientService.withdrawCreditCard(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            mobileProviderService.addMoney(providerName,amount);
-            transactionRepository.save(transaction);
-        }
-        else if(transaction.getInternetProvider()!=null){
-            String providerName=transaction.getInternetProvider().getProviderName();
-            double amount=transaction.getAmount();
-            double price=transaction.getInternetProvider().getPrice();
-            Client client=transaction.getClient();
-            if(amount<price){
-                throw new RuntimeException("added amount less than service price");
-            }
-            if(transaction.getPaymentMethod().equals("Wallet")){
-                if(client.getWallet()>=amount){
-                    clientService.withdrawWallet(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            else{
-                if(client.getCreditCard().getAmount()>=amount){
-                    clientService.withdrawCreditCard(client.getId(),amount);
-                }
-                else{
-                    throw new RuntimeException("Wallet amount less than required amount");
-                }
-            }
-            internetProviderService.addMoney(providerName,amount);
-            transactionRepository.save(transaction);
+    public Transaction createTransaction(PaymentRequest paymentRequest){
+        Long clientId = paymentRequest.getClientId();
+        Long serviceProviderId = paymentRequest.getProviderId();
+        double amount = paymentRequest.getAmount();
+        String paymentMethod= paymentRequest.getPaymentMethod().toUpperCase();
+
+
+        Optional<Client> clientResult=clientRepository.findById(clientId);
+        Client client=null;
+        if(clientResult.isPresent()){
+            client=clientResult.get();
         }
         else{
-            throw new RuntimeException("service provider doesn't exist");
+            throw new RuntimeException("Did not find client id - "+paymentRequest.getClientId());
         }
+
+        Optional<ServiceProvider>serviceProviderResult=serviceProviderRepository.findById(serviceProviderId);
+        ServiceProvider serviceProvider=null;
+        if(serviceProviderResult.isPresent()){
+            serviceProvider=serviceProviderResult.get();
+        }
+        else{
+            throw new RuntimeException("Did not find service provider id - "+paymentRequest.getProviderId());
+        }
+        if (!serviceProvider.isAmountSufficient(amount)) {
+            throw new RuntimeException("Insufficient amount for service fee.");
+        }
+
+
+        switch (paymentMethod) {
+            case "WALLET" -> {
+                if (!client.hasSufficientBalance(amount)) {
+                    throw new RuntimeException("Insufficient wallet balance.");
+                }
+                client.deductBalance(amount);
+            }
+            case "CREDIT_CARD" -> {
+                if (client.getCreditCard().getAmount() < amount) {
+                    throw new RuntimeException("Insufficient credit card limit.");
+                }
+                client.getCreditCard().setAmount(client.getCreditCard().getAmount() - amount);
+            }
+            default -> throw new RuntimeException("Invalid payment method.");
+        }
+
+
+        Transaction transaction=new Transaction(client,serviceProvider,amount,paymentMethod);
+        transactionRepository.save(transaction);
+
+        client.addTransaction(transaction);
+        clientRepository.save(client);
+
+        serviceProvider.addTransaction(transaction);
+        serviceProviderRepository.save(serviceProvider);
+
+        return transaction;
     }
 
-    List<Transaction> findAll() {
+    public List<Transaction> findAll() {
         return transactionRepository.findAll();
     }
 
-    Transaction findByID(Long id) {
+    public Transaction findByID(Long id) {
         Optional<Transaction>result=transactionRepository.findById(id);
         Transaction transaction=null;
         if(result.isPresent()){

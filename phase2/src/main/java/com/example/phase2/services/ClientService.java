@@ -1,7 +1,7 @@
 package com.example.phase2.services;
 
-import com.example.phase2.models.user.Client;
-import com.example.phase2.models.user.CreditCard;
+import com.example.phase2.models.Client;
+import com.example.phase2.models.CreditCard;
 import com.example.phase2.repositories.ClientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,7 @@ public class ClientService {
        Client dbClient= clientRepository.save(client);
         return dbClient;
     }
-    public Client findByName(String name){
-        return clientRepository.findByName(name);
-    }
+
     public List<Client> findAll(){
         return clientRepository.findAll();
     }
@@ -47,9 +45,6 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public Boolean existByName(String name){
-        return clientRepository.existsByName(name);
-    }
     @Transactional
     public void addWallet(Long id, double amount) {
         Optional<Client> result=clientRepository.findById(id);
@@ -76,30 +71,18 @@ public class ClientService {
         client.setWallet(client.getWallet()-amount);
         clientRepository.save(client);
     }
-    @Transactional
-    public void addCreditCard(Long id, double amount){
-        Optional<Client> result=clientRepository.findById(id);
+
+    public CreditCard addCreditCardToClient(long clientId, CreditCard creditCard){
+        Optional<Client> result=clientRepository.findById(clientId);
         Client client=null;
         if(result.isPresent()){
             client=result.get();
         }
         else{
-            throw new RuntimeException("Did not find client id - "+id);
+            throw new RuntimeException("Did not find client id - "+clientId);
         }
-        CreditCard creditCard=client.getCreditCard();
-        creditCardService.addAmount(creditCard.getCardNumber(),amount);
+        creditCard.setClient(client);
+        return creditCardService.save(creditCard);
     }
-    @Transactional
-    public void withdrawCreditCard(Long id, double amount) {
-        Optional<Client> result=clientRepository.findById(id);
-        Client client=null;
-        if(result.isPresent()){
-            client=result.get();
-        }
-        else{
-            throw new RuntimeException("Did not find client id - "+id);
-        }
-        CreditCard creditCard=client.getCreditCard();
-        creditCardService.withdrawAmount(creditCard.getCardNumber(),amount);
-    }
+
 }

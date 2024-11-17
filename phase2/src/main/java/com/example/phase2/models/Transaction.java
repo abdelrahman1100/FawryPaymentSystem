@@ -1,60 +1,43 @@
 package com.example.phase2.models;
 
-import com.example.phase2.models.serviceproviders.DonationProvider;
-import com.example.phase2.models.serviceproviders.InternetProvider;
-import com.example.phase2.models.serviceproviders.Landline;
-import com.example.phase2.models.serviceproviders.MobileProvider;
-import com.example.phase2.models.user.Client;
+import com.example.phase2.models.serviceproviders.*;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table
 public class Transaction {
     @Id
-    Long id;
-    @JoinColumn
-    @ManyToOne
-    Client client;
-    String paymentMethod;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long transactionId;
     double amount;
-    @JoinColumn
-    @OneToOne
-    Refund refund;
-    @JoinColumn
+    private LocalDateTime transactionDate;
     @ManyToOne
-    MobileProvider mobileProvider;
-    @JoinColumn
+    @JoinColumn(name = "client_id",nullable = false)
+    Client client;
     @ManyToOne
-    InternetProvider internetProvider;
-    @JoinColumn
-    @ManyToOne
-    Landline landline;
-    @JoinColumn
-    @ManyToOne
-    DonationProvider donationProvider;
+    @JoinColumn(name = "service_provider_id",nullable = false)
+    ServiceProvider serviceProvider;
 
-
-    //??
-    String provider;
-    String serviceType;
-
+    private String paymentMethod;
     public Transaction() {
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
+    public Transaction(Client client, ServiceProvider serviceProvider,double amount,String paymentMethod) {
+        this.amount = amount;
         this.client = client;
+        this.serviceProvider = serviceProvider;
+        this.paymentMethod=paymentMethod;
+        this.transactionDate= LocalDateTime.now();
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public Long getTransactionId() {
+        return transactionId;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 
     public double getAmount() {
@@ -65,59 +48,29 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getProvider() {
-        return provider;
+    public LocalDateTime getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
+    public void setTransactionDate(LocalDateTime transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
-    public MobileProvider getMobileProvider() {
-        return mobileProvider;
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public void setMobileProvider(MobileProvider mobileProvider) {
-        this.mobileProvider = mobileProvider;
+
+    public void setServiceProvider(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
     }
 
-    public InternetProvider getInternetProvider() {
-        return internetProvider;
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setInternetProvider(InternetProvider internetProvider) {
-        this.internetProvider = internetProvider;
-    }
-
-    public Landline getLandline() {
-        return landline;
-    }
-
-    public void setLandline(Landline landline) {
-        this.landline = landline;
-    }
-
-    public DonationProvider getDonationProvider() {
-        return donationProvider;
-    }
-
-    public void setDonationProvider(DonationProvider donationProvider) {
-        this.donationProvider = donationProvider;
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public Refund getRefund() {
-        return refund;
-    }
-
-    public void setRefund(Refund refund) {
-        this.refund = refund;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }
