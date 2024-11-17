@@ -11,38 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/clients")
 class ClientController {
     ClientService clientService;
+
     @Autowired
     public ClientController(ClientService clientService){
         this.clientService=clientService;
     }
-    @PostMapping("/clients")
+
+    @PostMapping
     public Client createClient(@RequestBody Client client){
         return clientService.save(client);
     }
 
-    @GetMapping("/clients/{clientId}")
+    @GetMapping("/{clientId}")
     public Client findClientById(@PathVariable Long clientId){
-        Client client=clientService.findById(clientId);
-        return client;
+        return clientService.findById(clientId);
     }
-    @GetMapping("/clients")
+
+    @GetMapping
     public List<Client>findAll(){
-        List<Client> list=clientService.findAll();
-        return list;
+        return clientService.findAll();
     }
-    @PostMapping("/clients/wallet/add/{clientId}/{amount}")
-    ResponseEntity<String>addWallet(@PathVariable Long clientId,@PathVariable double amount){
-        try {
-            clientService.addWallet(clientId, amount);
-            return ResponseEntity.ok("Money added successfully!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add money to wallet.");
-        }
-    }
-    @PostMapping("/clients/{clientId}/credit-card")
+
+    @PostMapping("/{clientId}/credit-card")
     public CreditCard addCreditCardToClient(@PathVariable Long clientId,@RequestBody CreditCard creditCard){
         return clientService.addCreditCardToClient(clientId,creditCard);
     }

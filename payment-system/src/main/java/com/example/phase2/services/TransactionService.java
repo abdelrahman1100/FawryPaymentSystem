@@ -19,12 +19,14 @@ public class TransactionService {
     TransactionRepository transactionRepository;
     ClientRepository clientRepository;
     ServiceProviderRepository serviceProviderRepository;
+
     @Autowired
     TransactionService(TransactionRepository transactionRepository,ClientRepository clientRepository,ServiceProviderRepository serviceProviderRepository){
         this.transactionRepository=transactionRepository;
         this.clientRepository=clientRepository;
         this.serviceProviderRepository=serviceProviderRepository;
     }
+
     @Transactional
     public Transaction createTransaction(PaymentRequest paymentRequest){
         Long clientId = paymentRequest.getClientId();
@@ -88,7 +90,7 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Transaction findByID(Long id) {
+    public Transaction findById(Long id) {
         Optional<Transaction>result=transactionRepository.findById(id);
         Transaction transaction=null;
         if(result.isPresent()){
