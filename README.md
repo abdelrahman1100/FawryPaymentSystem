@@ -18,7 +18,7 @@ A Java-based application that simulates a simplified version of the Fawry online
 
 - Java (OOP principles)
 - Java Collections Framework
-- Optional: JavaFX / Spring Boot for GUI or web interface
+- Optional: Spring Boot
 
 ## How to Run
 
